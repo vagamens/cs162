@@ -22,8 +22,6 @@
    +----------+----------------+
 */
 
-import java.io.File;
-import java.util.Scanner;
 import java.util.Random;
 
 class Project1 {
