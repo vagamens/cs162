@@ -50,10 +50,10 @@ public class TH1 {
 		while(value!=0) {
 			value = menu.run();
 			switch (value) {
-				case 1: readFile(); printHistogram(); break;
+				case 1: readFile(scan, hist); printHistogram(scan, hist); break;
 				case 2: writeFile(); break;
-				case 3: numberInput(); break;
-				case 4: printHistogram(); break;
+				case 3: numberInput(scan, hist); break;
+				case 4: printHistogram(scan, hist); break;
 				case 5: break;
 				case 6: value=0; break;
 				default: break;
@@ -62,7 +62,7 @@ public class TH1 {
 
 	}
 
-	private static void readFile() {
+	private static void readFile(Scanner scan, Histogram hist) {
 		System.out.println("Which file would you like to read from?");
 		String fileName = scan.next();
 		File file  = new File(fileName);
