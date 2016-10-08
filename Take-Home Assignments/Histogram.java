@@ -15,6 +15,7 @@
 */
 
 class Histogram {
+	private int[] randoms;
 
 	public Histogram() {}
 
@@ -22,7 +23,7 @@ class Histogram {
 		this.randoms = rands;
 	}
 
-	public void generateHisogram() {
+	public String[] generateHistogram() {
 		int[] counts = new int[10];
 
 		for(int i=0;i<this.randoms.length;i++) {

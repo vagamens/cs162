@@ -30,6 +30,8 @@
  import java.util.Random;
  import java.util.Scanner;
  import java.io.File;
+ import java.io.PrintWriter;
+ import java.io.FileNotFoundException;
 
 public class TH1 {
 
@@ -37,82 +39,119 @@ public class TH1 {
 
 	public static void main(String[] args) {
 
-		Scanner scan = new Scanner(System.in);
-		Random rand = new Random();
-		Histogram hist = new Histogram();
-
-		String[] menuItems = {"1. Read from file", "2. Write to file",
-		"3. Input number", "4. Create Histogram", "5. Help", "6. Quit"};
+		String[] menuItems = {"1. Read from file",
+							  "2. Input number",
+							  "3. Create Histogram",
+							  "4. Write to file",
+							  "5. Help",
+							  "6. Quit"};
 
 		Menu menu = new Menu(menuItems, 1);
 
+		int[] randoms={};
 		int value=1;
 		while(value!=0) {
 			value = menu.run();
 			switch (value) {
-				case 1: readFile(scan, hist); printHistogram(scan, hist); break;
-				case 2: writeFile(); break;
-				case 3: numberInput(scan, hist); break;
-				case 4: printHistogram(scan, hist); break;
-				case 5: break;
+				case 1: randoms = readFile(); break;
+				case 2: randoms = numberInput(); break;
+				case 3: printHistogram(randoms); break;
+				case 4: writeFile(randoms); break;
+				case 5: help(); break;
 				case 6: value=0; break;
-				default: break;
 			}
 		}
 
 	}
 
-	private static void readFile(Scanner scan, Histogram hist) {
+	private static int[] readFile() {
 		System.out.println("Which file would you like to read from?");
+		Scanner scan = new Scanner(System.in);
 		String fileName = scan.next();
-		File file  = new File(fileName);
-		Scanner reader = new Scanner(file);
-
-		int[] randoms;
-		while(reader.hasNext()) {
-			int[] temp = new int[randoms.length+1];
-			for(int i=0; i<randoms.length; i++) {
-				temp[i] = randoms[i];
-			}
-			randoms = temp;
-			randoms[randoms.length-1] = reader.nextInt();
+		int[] randoms={};
+		try {
+			File file  = new File(fileName);
+			Scanner reader = new Scanner(file);	
+			while(reader.hasNext()) {
+				int[] temp = new int[randoms.length+1];
+				for(int i=0; i<randoms.length; i++) {
+					temp[i] = randoms[i];
+				}
+					randoms = temp;
+					randoms[randoms.length-1] = reader.nextInt();
+				}
+		} catch (FileNotFoundException e) {
+			sopl("Some exception happened! Ignoring");
 		}
-		hist.setRandoms(randoms);
-		String[] strings = createHistogram();
-
+		return randoms;
 	}
 
-	private static void writeFile() {
-		String[] strings = createHistogram();
+	private static void writeFile(int[] randoms) {
+		String[] strings = createHistogram(randoms);
+		try {
+			PrintWriter writer = new PrintWriter("TH1Output.txt");
+			for(int i=0;i<strings.length;i++) {
+				writer.println(strings[i]);
+			}
+			writer.close();
+		} catch (FileNotFoundException e) {
+			sopl("Some exception happened! Ignoring");
+		}
 	}
 
-	private static void numberInput() {
-		String[] strings = createHistogram();
+	private static int[] numberInput() {
+		sopl("How many numbers would you like to generate?");
+		Scanner scan = new Scanner(System.in);
+		int gen = scan.nextInt();
+		sopl("");
+		sopl("");
+		return generateRandoms(gen);
 	}
 
-	private static void generateRandoms() {
-		System.out.println("How many numbers would you like to generate?");
-		int gen = this.scan.nextInt();
+	private static int[] generateRandoms(int gen) {
+		Random rand = new Random();
 		int[] randoms = new int[gen];
 		for(int i=0; i<gen; i++) {
 			randoms[i] = rand.nextInt(100)+1;
 		}
-		hist.setRandoms(randoms);
+		return randoms;
 	}
 
-	private static void printHistogram() {
-		Strings[] strings = createHistogram();
+	private static void printHistogram(int[] randoms) {
+		String[] strings = createHistogram(randoms);
+		sopl("");
+		sopl("");
 		for(int i=0; i<strings.length;i++) {
 			System.out.println(strings[i]);
 		}
+		sopl("");
+		sopl("");
 	}
 
-	private static void createHistogram() {
-		return host.generateHistogram();
+	private static String[] createHistogram(int[] randoms) {
+		Histogram hist = new Histogram();
+		hist.setRandoms(randoms);
+		return hist.generateHistogram();
 	}
 
 	private static void help() {
 		// print help page
+		sopl("");
+		sopl("1: Read numbers from an input file.");
+		sopl("2: Write the created Histogram to the \'TH1Output.txt\' file.");
+		sopl("3: Create a series of randoms numbers. The about generated will be\nthe input value.");
+		sopl("4: Prints the Histogram to standard ou.");
+		sopl("5: Prints this help page.");
+		sopl("6: Exits this program.");
+		sopl("");
+	}
+
+	private static void sopl(String s) {
+		System.out.println(s);
+	}
+
+	private static void sop(String s) {
+		System.out.print(s);
 	}
 
 }

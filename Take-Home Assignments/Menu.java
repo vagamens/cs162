@@ -8,7 +8,7 @@
 public class Menu {
 	String[] items;
 	int mode;
-	Scanner scan = new Scanner();
+	Scanner scan = new Scanner(System.in);
 
 	public Menu(String[] menuItems, int mode) {
 		this.items = menuItems;
@@ -20,8 +20,8 @@ public class Menu {
 			for(int i=0; i<items.length; i++) {
 				System.out.println(items[i]);
 			}
+			System.out.println("What would you like to do?");
+			return this.scan.nextInt();
 		}
-		System.out.println("What would you like to do?");
-		return this.scan.nextInt();
 	}
 }
