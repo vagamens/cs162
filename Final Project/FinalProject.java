@@ -14,3 +14,10 @@
     8. GUI components, event listeners, and their various uses
     9. inheritance and polymorphism
    10. exceptions
+*/
+
+public class FinalProject {
+	public static void main(String[] args) {
+		
+	}
+}
