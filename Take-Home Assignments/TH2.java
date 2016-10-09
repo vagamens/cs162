@@ -1,6 +1,6 @@
 /* Take-Home Assignment 2
    
-   1. Start withanother person's design (car, house, computer, ...) and tests
+   1. Start with another person's design (car, house, computer, ...) and tests
       to work on this project
    2. design a few decomposed components* (the design must include variables,
       methods, and possible objects that the component would need access to to
