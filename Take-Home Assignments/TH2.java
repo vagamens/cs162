@@ -6,7 +6,7 @@
       methods, and possible objects that the component would need access to to
       properly work)
    3. choose one component, write a few tests for it (tests that you know if
-   	  working would show that your code should be working properly)
+   	working would show that your code should be working properly)
    4. implement one of those components in code as a class file of its own (with
       variables, methods, and a main that will act as a driver to show it working
       with your tests and to demonstrate what it stores or can do)
