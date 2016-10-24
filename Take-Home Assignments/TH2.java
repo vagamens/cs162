@@ -17,18 +17,7 @@
 
 public class TH2 {
 
-   String[] thickness = {"think", "thin", "flat"};
-
-   String[] custs = {"regular", "gluten free"};
-   String[] sizes = {"personal", "small", "medium", "large"};
    String[] cheese = {"half", "normal", "double", "none"};
-                     // side1, side2, all
-   String[] sauses = {"tomato", "white", "BBQ"};
-                     // normal double half
-   String[][] toppings = {{"pepperoni", "ham", "bacon", "sausage", "beef", "chicken", "fish"}.
-                          {"chedder cheese", "banana peppers", "bell peppers", "tomatoes",
-                           "basil", "onion", "pineapple", "pizza", "hot sauce", "garlic", "mushrooms"}
-                         };
    String[] dlc = {"crushed red peppers", "\"special\" crust", "M. Night Shroomalooms",
                    "parmesian cheese powder"
                   };

@@ -11,7 +11,8 @@
 */
 
 public class TH4 {
+
 	public static void main(String[] args) {
-		
+      TH2Pizza pizza = new TH2Pizza();
 	}
 }
