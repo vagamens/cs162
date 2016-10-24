@@ -4,7 +4,7 @@ public class TH2Pizza {
 
 	String[] sauce = new String[2];
 
-	String[][] cheese = new String[2][2];
+	boolean[] cheese = new String[2];
 
 	public TH2Pizza() {
 
@@ -15,17 +15,26 @@ public class TH2Pizza {
 		for(int i=0;i<toppings.length;i++) {
 			temp[i] = toppings[i];
 		}
-		temp[temp.length-1] = top;
+		if(isValidTopping(top)) {
+			temp[temp.length-1] = top;
+			toppings = temp;
+		}
 	}
 
 	public void addSauce(String sauce) {
-		this.sauce[0] = sauce;
-		this.sauce[1] = sauce;
+		if(isValidSauce(sauce)) {
+			this.sauce[0] = sauce;
+			this.sauce[1] = sauce;
+		}
 	}
 
 	public void addSauce(String leftSauce, String rightSauce) {
-		this.sauce[0] = leftSauce;
-		this.sauce[1] = rightSauce;
+		if(isValidSauce(leftSauce)) {
+			this.sauce[0] = leftSauce;
+		}
+		if(isValidSauce(rightSauce)) {
+			this.sauce[1] = rightSauce;
+		}
 	}
 
 	public void addCheese(String cheese) {
@@ -33,14 +42,9 @@ public class TH2Pizza {
 		this.cheese[1][0] = cheese;
 	}
 
-	public void addCheese(String[] cheese) {
+	public void addCheese(String leftCheese, String rightCheese) {
 		this.cheese[0] = cheese;
 		this.cheese[1] = cheese;
-	}
-
-	public void addCheese(String[] leftCheese, String[] rightCheese) {
-		this.cheese[0] = leftCheese;
-		this.cheese[1] = rightCheese;
 	}
 
 	public String[] getToppings() {
@@ -90,7 +94,7 @@ public class TH2Pizza {
 	}
 
 	private boolean isValidCheeseAmount(String cheese) {
-		String[] validCheeses = {"half", "normal", "double", "non"};
+		String[] validCheeses = {"half", "normal", "double", "none"};
 		return isValid(validCheeses, cheese);
 	}
 
