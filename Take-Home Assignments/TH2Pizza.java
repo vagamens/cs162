@@ -1,13 +1,53 @@
 public class TH2Pizza {
 
-	String[] toppings = {};
+	private String[] toppings = {};
 
-	String[] sauce = new String[2];
+	private String sauce;
 
-	boolean[] cheese = new String[2];
+	private boolean[] cheese = new boolean[2];
+
+	private String[] crust = new String[2];
+
+	private String[] validToppings = {"pepperoni", "ham", "bacon", "sausage", "beef", "chicken",
+									"fish", "chedder cheese", "banana peppers", "bell peppers",
+									"tomatoes", "basil", "onion", "pineapple", "hot sauce", "garlic",
+									"mushcooms"};
 
 	public TH2Pizza() {
 
+	}
+
+	public String[] getValidToppings() {
+		return this.validToppings;
+	}
+
+	public String getSauce() {
+		return this.sauce;
+	}
+
+	public boolean[] getCheese() {
+		return this.cheese;
+	}
+
+	public String[] getCrust() {
+		return this.crust;
+	}
+
+	public void setCrust(String crust) {
+		if (this.isValidCrust(crust)) {
+			this.crust[0] = crust;
+		}
+	}
+
+	public void setCrust(String crust, String thick) {
+		this.setCrust(crust);
+		this.setCrustThickness(thick);
+	}
+
+	public void setCrustThickness(String thick) {
+		if (this.isValidThickness(thick)) {
+			this.crust[1] = thick;
+		}
 	}
 
 	public void addTopping(String top) {
@@ -23,32 +63,22 @@ public class TH2Pizza {
 
 	public void addSauce(String sauce) {
 		if(isValidSauce(sauce)) {
-			this.sauce[0] = sauce;
-			this.sauce[1] = sauce;
+			this.sauce = sauce;
 		}
 	}
 
-	public void addSauce(String leftSauce, String rightSauce) {
-		if(isValidSauce(leftSauce)) {
-			this.sauce[0] = leftSauce;
-		}
-		if(isValidSauce(rightSauce)) {
-			this.sauce[1] = rightSauce;
-		}
-	}
-
-	public void addCheese(String cheese) {
-		this.cheese[0][0] = cheese;
-		this.cheese[1][0] = cheese;
-	}
-
-	public void addCheese(String leftCheese, String rightCheese) {
+	public void addCheese(Boolean cheese) {
 		this.cheese[0] = cheese;
 		this.cheese[1] = cheese;
 	}
 
+	public void addCheese(Boolean leftCheese, Boolean rightCheese) {
+		this.cheese[0] = leftCheese;
+		this.cheese[1] = rightCheese;
+	}
+
 	public String[] getToppings() {
-		return toppings;
+		return this.toppings;
 	}
 
 	public TH2Pizza getPizza() {
@@ -65,11 +95,6 @@ public class TH2Pizza {
 	}
 
 	private boolean isValidTopping(String topping) {
-		String[] validToppings = {"pepperoni", "ham", "bacon", "sausage", "beef", "chicken",
-									"fish", "chedder cheese", "banana peppers", "bell peppers",
-									"tomatoes", "basil", "onion", "pineapple", "hot sauce", "garlic",
-									"mushcooms"};
-
 		return isValid(validToppings, topping);
 	}
 

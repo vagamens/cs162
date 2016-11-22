@@ -15,6 +15,10 @@
       format of what you would ask a user for input)
 */
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.*;
+
 public class TH2 {
 
    String[] cheese = {"half", "normal", "double", "none"};
@@ -23,6 +27,14 @@ public class TH2 {
                   };
 
 	public static void main(String[] args) {
-		// do stuff
+      TH2Pizza pizza = new TH2Pizza();
+
+		JFrame frame = new JFrame("TH2-Pizza");
+
+      TH2OrderPanel panel = new TH2OrderPanel(frame, pizza);
+      frame.getContentPane().add(panel);
+
+      frame.pack();
+      frame.setVisible(true);
 	}
 }
