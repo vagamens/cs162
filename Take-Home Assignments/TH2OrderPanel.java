@@ -126,7 +126,7 @@ public class TH2OrderPanel extends JPanel {
 		leftHalfCheese.setSelected(false);
 		leftHalfCheese.addActionListener(new RadioListener());
 		JRadioButton rightHalfCheese = new JRadioButton("Right Half");
-		rightHalfCheese.setActionCommand("full");
+		rightHalfCheese.setActionCommand("right");
 		rightHalfCheese.setSelected(false);
 		rightHalfCheese.addActionListener(new RadioListener());
 
@@ -220,7 +220,9 @@ public class TH2OrderPanel extends JPanel {
 		private void completeOrder() {
 			String[] tops = pizza.getValidToppings();
 			for(int i=0; i<toppingChecks.length;i++) {
-				pizza.addTopping(tops[i]);
+				if(toppingChecks[i].isSelected()) {
+					pizza.addTopping(tops[i]);
+				}
 			}
 			parent.dispose();
 			JFrame frame = new JFrame("TH2-Pizza Comfirmation");
@@ -237,6 +239,7 @@ public class TH2OrderPanel extends JPanel {
 			String command = e.getActionCommand();
 			switch(command) {
 				case "complete": completeOrder(); break;
+				case "exit": parent.dispose(); break;
 				default: break;
 			}
 		}

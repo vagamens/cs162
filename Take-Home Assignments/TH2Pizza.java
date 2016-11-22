@@ -104,7 +104,7 @@ public class TH2Pizza {
 	}
 
 	private boolean isValidCrust(String crust) {
-		String[] validCrusts = {"regular", "gluten  free"};
+		String[] validCrusts = {"regular", "gluten free"};
 		return isValid(validCrusts, crust);
 	}
 
