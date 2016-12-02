@@ -28,8 +28,4 @@ public class Being extends KSObject {
 	public Inventory getInventory() {
 		return inventory;
 	}
-
-	public Inventory getEquipment() {
-		return equips;
-	}
 }

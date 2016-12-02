@@ -44,6 +44,10 @@ public class Inventory {
 		return capacity;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
 	public int add(Item i) {
 		int success = 0;
 		if(size < capacity) {
