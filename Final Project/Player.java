@@ -12,7 +12,7 @@ public class Player extends Being {
 	}
 
 	public Player(String n, String d, String sd) {
-		this(n, d, sd, "human");
+		this(n, d, sd, "kitten");
 	}
 
 	public String getRole() {

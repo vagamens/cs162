@@ -15,32 +15,10 @@
     9. inheritance and polymorphism
    10. exceptions
 */
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class FinalProject {
 
 	public static void main(String[] args) {
 		Game game = new Game();
-		Timer timer = new Timer(true);
-		GameTimer gTimer = new GameTimer(game);
-		timer.scheduleAtFixedRate(gTimer, 0, 50);
-	}
-
-	private class GameTimer extends TimerTask{
-
-		private Game game;
-		
-		public GameTimer(Game game) {
-			super();
-			this.game = game;
-		}
-
-		@Override
-	    public void run() {
-	        game.run();
-	    }
-
-	    public void completeTask() {}
+		//game.run();
 	}
 }

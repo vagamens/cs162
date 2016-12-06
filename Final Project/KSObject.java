@@ -1,12 +1,20 @@
+import java.awt.Dimension;
+
 public class KSObject {
 	protected String name;
 	protected String description;
 	protected String shortDescription;
+	protected Dimension dimension;
+
+	public KSObject(String n, String d, String sd, Dimension dim) {
+		this.setName(n);
+		this.setDescription(d);
+		this.setShortDescription(sd);
+		this.setDimension(dim);
+	}
 
 	public KSObject(String n, String d, String sd) {
-		this.name = n;
-		this.description = d;
-		this.shortDescription = sd;
+		this(n, d, sd, null);
 	}
 
 	public String getName() {
@@ -31,5 +39,13 @@ public class KSObject {
 
 	public void setShortDescription(String sd) {
 		this.shortDescription = sd;
+	}
+
+	public Dimension getDimension() {
+		return this.dimension;
+	}
+
+	public void setDimension(Dimension dim) {
+		this.dimension = dim;
 	}
 }
