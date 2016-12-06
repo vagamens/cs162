@@ -32,6 +32,7 @@ public class Game {
 		output = new JTextArea();
 		output.setFocusable(false);
 		output.append("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		output.setCaretPosition(output.getDocument().getLength());
 		input = new JTextField();
 		input.setActionCommand("input");
 		input.addActionListener(new InputListener());
@@ -57,6 +58,8 @@ public class Game {
 		//map.addRoom(new Room("Living Room", "Just the living room where all the humans sit.", "The Living Room"));//, tempObjects));
 
 		frame.add(gamePanel);
+
+		interpret.run();
 	}
 
 	public void setup() {
@@ -117,6 +120,10 @@ public class Game {
 		this.currentRoom = i;
 	}
 
+	public void setInterpreter(Interpreter i) {
+		this.interpret = i;
+	}
+
 	private String takeInput() {
 		String input = this.input.getText();
 		this.input.setText("");
@@ -131,7 +138,7 @@ public class Game {
 		public void actionPerformed(ActionEvent event) {
 			String command = event.getActionCommand();
 			if(command == "input") {
-				interpret.processCommand();
+				interpret.run();
 			}
 		}
 	}
