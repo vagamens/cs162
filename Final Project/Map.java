@@ -9,8 +9,12 @@ public class Map extends KSObject {
 		this.rooms = rooms;
 	}
 
+	public Map(String n, String d, String sd) {
+		this(n, d, sd, new ArrayList<Room>());
+	}
+
 	public Map() {
-		this("Map", "just a map", "just a map", null);
+		this("Map", "just a map", "just a map", new ArrayList<Room>());
 	}
 
 	public void addRoom(Room r) {

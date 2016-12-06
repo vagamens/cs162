@@ -51,7 +51,10 @@ public class Game {
 		ArrayList<RoomObject> tempObjects = new ArrayList<RoomObject>();
 		tempObjects.add(new RoomObject("Couch", "Just a simple three-coushin couch", "Just a couch"));
 		tempObjects.add(new RoomObject("Rug", "A nice european rug with tassles on the short sides.", "A nice eurpoean rug"));
-		this.map.addRoom(new Room("Living Room", "Just the living room where all the humans sit.", "The Living Room"));//, tempObjects));
+		Room room = new Room("Living Room", "Just the living room where all the humans sit.", "The Living Room", tempObjects);
+		map = new Map("Main Map", "Just the main map", "Just a map");
+		map.addRoom(room);
+		//map.addRoom(new Room("Living Room", "Just the living room where all the humans sit.", "The Living Room"));//, tempObjects));
 
 		frame.add(gamePanel);
 	}
