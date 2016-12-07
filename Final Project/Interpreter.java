@@ -1,10 +1,13 @@
+import java.awt.Robot;
 import java.util.Timer;
 import java.util.Arrays;
 import java.lang.Thread;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.lang.ClassLoader;
+import java.awt.event.KeyEvent;
 import javax.swing.JScrollPane;
+import java.awt.AWTException;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.Constructor;
 
@@ -16,7 +19,7 @@ public class Interpreter {
 	private boolean debug = true;
 	Timer timer = new Timer();
 	private boolean[] hasPrinted = {false, false, false};
-	private boolean[] hasValue = {false, false, false};
+	private boolean[] firstRun = {true, true, true};
 
 	public Interpreter(Game parent) {
 		this.parent = parent;
@@ -37,43 +40,45 @@ public class Interpreter {
 		if(!hasPrinted[i]) {
 			appendNewLine(prompt);
 			hasPrinted[i] = true;
+			//robotKeyPress(KeyEvent.VK_ENTER);
 		}
-	}
-
-	private boolean setupTest(int i, String s) {
-		if(!hasValue[i]) {
-			if(s != "") {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private void setupName(String s) {
-		setupPrompt(0, "What is your name?");
-		if(setupTest(0, s)) {
-			this.parent.getPlayer().setName(s);
-			hasValue[0] = true;
+		if(state[1] == "name") {
+			setupPrompt(0, "What is your name?");
+			if(s != "") {
+				this.parent.getPlayer().setName(s);
+				if(!firstRun[0]) {state[1] = "quest";}
+			}
 		}
+		firstRun[0] = false;
 	}
 
 	private void setupQuest(String s) {
-		setupPrompt(0, "what is your quest?");
-		if(setupTest(1, s)) {
-			this.parent.getPlayer().setQuest(s);
-			hasValue[1] = true;
-		}	
+		if(state[1] == "quest") {
+			setupPrompt(1, "what is your quest?");
+			if(s != "") {
+				this.parent.getPlayer().setQuest(s);
+				if(!firstRun[1]) {state[1] = "color";}
+			}	
+		}
+		firstRun[1] = false;
 	}
 
 	private void setupColor(String s) {
-		setupPrompt(0, "What is your favorite color?");
-		if(setupTest(2, s)) {
-			this.parent.getPlayer().setColor(s);
-			hasValue[2] = true;
+		if(state[1] == "color") {
+			setupPrompt(2, "What is your favorite color?");
+			if(s != "") {
+				this.parent.getPlayer().setColor(s);
+				if(!firstRun[2]) {state[1] = "done";}
+			}
 		}
+		firstRun[2] = false;
 	}
-
+	
 	private void setup(String[] s) {
+		System.out.println(Arrays.toString(state));
 		String q = "";
 		for(int i=0;i<s.length;i++) {
 			if(i != 0) {
@@ -82,41 +87,19 @@ public class Interpreter {
 			q = q + s[i];
 		}
 		System.out.println("\""+q+"\"");
-		if(state[1] == "name") {
-			setupName(q);
-		} else if (state[1] == "quest") {
-			setupQuest(q);
-		} else if (state[1] == "color") {
-			setupColor(q);
-		}
-		if(hasValue[0] && hasPrinted[0]) {
-			state[1] = "quest";
-		}
-		if(hasValue[1] && hasPrinted[1]) {
-			state[1] = "color";
-		}
-		if(hasValue[2] && hasPrinted[2]) {
-			state[1] = "done";
-		}
+		if(state[1] == "name") {setupName(q);}
+		if(state[1] == "quest") {setupQuest(q);}
+		if(state[1] == "color") {setupColor(q);}
 		if(state[0] == "setup" && state[1] == "done") {
 			state[0] = "running";
 			state[1] = "";
 		}
-	}
-
-	private boolean outputTest(String s, boolean has) {
-		System.out.println(s);
-		if(s != "" && s != null && s != " ") {
-			switch(state[1]) {
-				case "name": parent.getPlayer().setName(s); return true;
-				case "quest": parent.getPlayer().setQuest(s); return true;
-				case "color": parent.getPlayer().setColor(s); return true;
-			}
-		}
-		return false;
+		System.out.println(Arrays.toString(state));
+		
 	}
 
 	private void processCommand(String[] s) {
+		System.out.println(Arrays.toString(state));
 		System.out.println(Arrays.toString(s));
 		if(sleepLen == 0) {
 			String q = "";
