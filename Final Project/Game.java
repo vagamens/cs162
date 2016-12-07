@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -20,11 +21,13 @@ public class Game {
 	private Player player;
 	private Map map;
 	private int currentRoom = 0;
+	private Font mainFont;
 
 	public Game() {
 		frame = new BaseFrame("Kitten Simulator");
 		player = new Player("Kitten", "User", "User");
 		interpret = new Interpreter(this);
+		mainFont = new Font(Font.MONOSPACED, Font.PLAIN, 12);
 
 		// setup basic GamePanel
 		gamePanel = new BasePanel();
@@ -32,10 +35,12 @@ public class Game {
 		output = new JTextArea();
 		output.setFocusable(false);
 		output.append("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		output.setFont(mainFont);
 		output.setCaretPosition(output.getDocument().getLength());
 		input = new JTextField();
 		input.setActionCommand("input");
 		input.addActionListener(new InputListener());
+		input.setFont(mainFont);
 		submit = new JButton("Submit");
 		submit.setActionCommand("input");
 		submit.addActionListener(new InputListener());

@@ -33,20 +33,61 @@ public class Interpreter {
 
 	}
 
+	private void setupPrompt(int i, String prompt) {
+		if(!hasPrinted[i]) {
+			appendNewLine(prompt);
+			hasPrinted[i] = true;
+		}
+	}
+
+	private boolean setupTest(int i, String s) {
+		if(!hasValue[i]) {
+			if(s != "") {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void setupName(String s) {
+		setupPrompt(0, "What is your name?");
+		if(setupTest(0, s)) {
+			this.parent.getPlayer().setName(s);
+			hasValue[0] = true;
+		}
+	}
+
+	private void setupQuest(String s) {
+		setupPrompt(0, "what is your quest?");
+		if(setupTest(1, s)) {
+			this.parent.getPlayer().setQuest(s);
+			hasValue[1] = true;
+		}	
+	}
+
+	private void setupColor(String s) {
+		setupPrompt(0, "What is your favorite color?");
+		if(setupTest(2, s)) {
+			this.parent.getPlayer().setColor(s);
+			hasValue[2] = true;
+		}
+	}
+
 	private void setup(String[] s) {
 		String q = "";
 		for(int i=0;i<s.length;i++) {
-			q = q + s[i] + " ";
+			if(i != 0) {
+				q = q+" ";
+			}
+			q = q + s[i];
 		}
-		if(!hasValue[0]) {
-			hasValue[0] = outputTest("What is your name?", q, hasPrinted[0]);
-			hasPrinted[0] = true;
-		} else if(!hasValue[1]) {
-			hasValue[1] = outputTest("What is your quest?", q, hasPrinted[1]);
-			hasPrinted[1] = true;
-		} else if(!hasValue[2]) {
-			hasValue[2] = outputTest("what is your favorite color?", q, hasPrinted[2]);
-			hasPrinted[2] = true;
+		System.out.println("\""+q+"\"");
+		if(state[1] == "name") {
+			setupName(q);
+		} else if (state[1] == "quest") {
+			setupQuest(q);
+		} else if (state[1] == "color") {
+			setupColor(q);
 		}
 		if(hasValue[0] && hasPrinted[0]) {
 			state[1] = "quest";
@@ -63,14 +104,9 @@ public class Interpreter {
 		}
 	}
 
-	private boolean outputTest(String st, String s, boolean has) {
-		System.out.println(st);
+	private boolean outputTest(String s, boolean has) {
 		System.out.println(s);
-		appendNewLine(s);
-		if(!has) {
-			appendNewLine(st);
-		}
-		if(s != "" || s != null) {
+		if(s != "" && s != null && s != " ") {
 			switch(state[1]) {
 				case "name": parent.getPlayer().setName(s); return true;
 				case "quest": parent.getPlayer().setQuest(s); return true;
@@ -100,10 +136,50 @@ public class Interpreter {
 				case "name": q = name(s); break;
 				case "quest": q = quest(s); break;
 				case "color": q = color(s); break;
+				case "load": load(s); break;
+				case "save": save(s); break;
+				case "help": help(s); break;
 				case "exit": exit(s); break;
 				default: q = ""; break;
 			}
 			appendNewLine(q);
+		}
+	}
+
+	private void help(String[] s) {
+		appendNewLine("Help");
+		appendNewLine("    Help <command>:     get command-specific help");
+		appendNewLine("    i | inventory:      list the player's inventory");
+		appendNewLine("    l | look <object>:  either look about your current space or at a specific object");
+		appendNewLine("    sleep <seconds>:    take a <seconds> long nap");
+		appendNewLine("    name:               check your name");
+		appendNewLine("    quest:              check your quest");
+		appendNewLine("    color:              check your color");
+		appendNewLine("    load <save>:        load a <save>");
+		appendNewLine("    save:               save your current game");
+		appendNewLine("    help:               print this page");
+		appendNewLine("    exit:               close the game without saving");
+	}
+
+	private void save(String[] s) {
+		if(s.length > 1) {
+			appendNewLine("Your game has been saved");
+		} else {
+			appendNewLine("Save 1");
+			appendNewLine("Save 2");
+			appendNewLine("Save 3");
+			appendNewLine("Save <save number>");
+		}
+	}
+
+	private void load(String[] s) {
+		if(s.length > 1) {
+			appendNewLine("Your save has been loaded");
+		} else {
+			appendNewLine("Save 1");
+			appendNewLine("Save 2");
+			appendNewLine("Save 3");
+			appendNewLine("Load <save number>");
 		}
 	}
 
